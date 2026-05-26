@@ -1,0 +1,91 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>INPUT KARYAWAN BARU</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding" style="--background: #fafafc;">
+  
+  <div style="text-align: center; margin-bottom: 25px;">
+    <h3 style="font-weight: bold; color: #2c3e50; margin-bottom: 5px;">Form Data Karyawan</h3>
+    <p style="color: #7f8fa6; font-size: 14px; margin-top: 0;">Isi lengkap data akreditasi login & profil formal</p>
+  </div>
+
+  <div style="text-align: center; margin-bottom: 25px;">
+    <div (click)="ambilFoto()" style="width: 120px; height: 150px; margin: 0 auto; background: #dfe4ea; border-radius: 12px; overflow: hidden; display: flex; align-items: center; justify-content: center; border: 2px dashed #a4b0be; cursor: pointer; position: relative;">
+      
+      <img *ngIf="previewFoto" [src]="previewFoto" style="width: 100%; height: 100%; object-fit: cover;" />
+      
+      <div *ngIf="!previewFoto" style="text-align: center; color: #747d8c;">
+        <ion-icon name="camera-outline" style="font-size: 32px;"></ion-icon>
+        <p style="font-size: 12px; margin: 5px 0 0 0;">Ambil Pas Foto</p>
+      </div>
+    </div>
+  </div>
+
+  <div style="background: white; border-radius: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.03); padding: 15px;">
+    
+    <h5 style="font-weight: bold; color: #5260ff; margin-left: 10px; margin-bottom: 15px;">Account Login Info</h5>
+    
+    <ion-item lines="none" style="--background: #f8f9fa; border-radius: 10px; margin-bottom: 12px;">
+      <ion-label position="stacked" style="color: #7f8fa6;">Nama Lengkap</ion-label>
+      <ion-input type="text" placeholder="Masukkan nama karyawan" [(ngModel)]="karyawan.name"></ion-input>
+    </ion-item>
+
+    <ion-item lines="none" style="--background: #f8f9fa; border-radius: 10px; margin-bottom: 12px;">
+      <ion-label position="stacked" style="color: #7f8fa6;">Email Instansi</ion-label>
+      <ion-input type="email" placeholder="contoh@perusahaan.com" [(ngModel)]="karyawan.email"></ion-input>
+    </ion-item>
+
+    <ion-item lines="none" style="--background: #f8f9fa; border-radius: 10px; margin-bottom: 20px;">
+      <ion-label position="stacked" style="color: #7f8fa6;">Password Default Karyawan</ion-label>
+      <ion-input type="password" placeholder="Minimal 6 Karakter" [(ngModel)]="karyawan.password"></ion-input>
+    </ion-item>
+
+    <h5 style="font-weight: bold; color: #5260ff; margin-left: 10px; margin-bottom: 15px; margin-top: 20px;">Employment Details</h5>
+
+    <ion-item lines="none" style="--background: #f8f9fa; border-radius: 10px; margin-bottom: 12px;">
+      <ion-label position="stacked" style="color: #7f8fa6;">Department</ion-label>
+      <ion-input type="text" placeholder="Contoh: GA Department, IT System" [(ngModel)]="karyawan.department"></ion-input>
+    </ion-item>
+
+    <ion-item lines="none" style="--background: #f8f9fa; border-radius: 10px; margin-bottom: 12px;">
+      <ion-label position="stacked" style="color: #7f8fa6;">Jabatan / Position</ion-label>
+      <ion-input type="text" placeholder="Contoh: Pelaksana, Operator" [(ngModel)]="karyawan.position"></ion-input>
+    </ion-item>
+
+   <ion-item lines="none" style="--background: #f8f9fa; border-radius: 10px; margin-bottom: 12px;">
+      <ion-label position="stacked" style="color: #7f8fa6;">Status Hubungan Kerja</ion-label>
+      <ion-select placeholder="Pilih Status" [(ngModel)]="karyawan.status_karyawan" style="width: 100%;">
+        <ion-select-option value="Outsourcing">Outsourcing</ion-select-option>
+        <ion-select-option value="Kontrak">Karyawan Kontrak</ion-select-option>
+        <ion-select-option value="Tetap">Karyawan Tetap</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item lines="none" style="--background: #f8f9fa; border-radius: 10px; margin-bottom: 12px;">
+      <ion-label position="stacked" style="color: #7f8fa6;">Homebased Penempatan</ion-label>
+      <ion-input type="text" placeholder="Contoh: Cikampek, Karawang Barat" [(ngModel)]="karyawan.homebased"></ion-input>
+    </ion-item>
+
+    <ion-item lines="none" style="--background: #f8f9fa; border-radius: 10px; margin-bottom: 12px;">
+      <ion-label position="stacked" style="color: #7f8fa6;">Tanggal Lahir (Birth Date)</ion-label>
+      <ion-input type="date" [(ngModel)]="karyawan.birth_date"></ion-input>
+    </ion-item>
+
+    <ion-item lines="none" style="--background: #f8f9fa; border-radius: 10px; margin-bottom: 20px;">
+      <ion-label position="stacked" style="color: #7f8fa6;">Tanggal Mulai Masuk (Join Date)</ion-label>
+      <ion-input type="date" [(ngModel)]="karyawan.join_date"></ion-input>
+    </ion-item>
+
+    <ion-button expand="block" style="--border-radius: 10px; font-weight: bold; margin-top: 25px; --background: #5260ff;" (click)="simpanKaryawan()">
+      <ion-icon name="save-outline" slot="start"></ion-icon>
+      DAFTARKAN KARYAWAN
+    </ion-button>
+
+  </div>
+
+</ion-content>

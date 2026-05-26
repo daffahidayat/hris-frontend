@@ -1,0 +1,48 @@
+<ion-header>
+  <ion-toolbar color="tertiary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Form Izin / Cuti</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <p>Silakan isi form di bawah ini untuk mengajukan izin tidak masuk kerja.</p>
+
+  <ion-list style="margin-bottom: 20px;">
+    <ion-item>
+      <ion-label position="stacked">Tipe Pengajuan</ion-label>
+      <ion-select [(ngModel)]="tipe_izin" placeholder="Pilih Tipe">
+        <ion-select-option value="Sakit">Sakit</ion-select-option>
+        <ion-select-option value="Izin">Izin (Keperluan Pribadi)</ion-select-option>
+        <ion-select-option value="Cuti">Cuti Tahunan</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Tanggal</ion-label>
+      <ion-input type="date" [(ngModel)]="tanggal"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Alasan Lengkap</ion-label>
+      <ion-textarea [(ngModel)]="alasan" placeholder="Tulis alasan di sini..." rows="3"></ion-textarea>
+    </ion-item>
+  </ion-list>
+
+  <ion-button expand="block" fill="outline" color="medium" (click)="ambilFoto()" style="margin-bottom: 15px;">
+    <ion-icon name="camera-outline" slot="start"></ion-icon>
+    {{ buktiBase64 ? 'Foto Bukti Sudah Dipilih' : 'Upload Foto Bukti (Surat Dokter, dll)' }}
+  </ion-button>
+
+  <div *ngIf="buktiBase64" style="text-align: center; margin-bottom: 20px;">
+    <img [src]="'data:image/jpeg;base64,' + buktiBase64" style="max-height: 150px; border-radius: 8px;" />
+  </div>
+
+  <ion-button expand="block" color="primary" (click)="simpan()" style="height: 50px;">
+    <ion-icon name="send-outline" slot="start"></ion-icon>
+    KIRIM PENGAJUAN
+  </ion-button>
+
+</ion-content>

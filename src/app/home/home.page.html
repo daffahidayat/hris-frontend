@@ -1,20 +1,181 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>DASHBOARD</ion-title>
+    
+    <ion-buttons slot="end">
+      <ion-button (click)="keHalamanProfil()">
+        <ion-icon slot="icon-only" name="person-circle-outline" style="font-size: 28px;"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="ion-padding">
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content 
+      pullingIcon="chevron-down-circle-outline"
+      pullingText="Tarik untuk refresh"
+      refreshingSpinner="circles"
+      refreshingText="Lagi nyari data baru...">
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <div style="text-align: center; margin-top: 20px; margin-bottom: 20px;">
+    <h2>selamat datang!</h2>
+    <p>Jangan lupa absen hari ini ya.</p>
   </div>
+
+  <ion-card color="light" style="margin-bottom: 30px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+    <ion-card-content>
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <div>
+          <p style="margin: 0; font-size: 14px; color: #666;">Status Kedisiplinan</p>
+          <h2 style="font-weight: bold; color: var(--ion-color-primary); margin-top: 5px;">
+            {{ statusKlaster || 'Sangat Disiplin' }} 
+          </h2>
+        </div>
+        <ion-icon name="ribbon-outline" style="font-size: 45px; color: #FFD700;"></ion-icon>
+      </div>
+      <p style="font-size: 12px; margin-top: 10px; color: #888;">
+        *Berdasarkan analisis klastering K-Means bulan ini
+      </p>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-grid style="margin-bottom: 20px; padding: 0;">
+    <ion-row>
+      <ion-col size="6">
+        <ion-card style="margin: 0; background: #e0f7fa; border: 1px solid #b2ebf2;">
+          <ion-card-content style="text-align: center; padding: 15px 10px;">
+            <p style="margin: 0; font-size: 12px; color: #006064; font-weight: bold;">Hadir Bulan Ini</p>
+            <h1 style="margin: 5px 0 0; color: #00838f; font-weight: bold;">{{ totalHadir }} <span style="font-size: 14px;">Hari</span></h1>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col size="6">
+        <ion-card style="margin: 0; background: #fff3e0; border: 1px solid #ffe0b2;">
+          <ion-card-content style="text-align: center; padding: 15px 10px;">
+            <p style="margin: 0; font-size: 12px; color: #e65100; font-weight: bold;">Sisa Cuti Lu</p>
+            <h1 style="margin: 5px 0 0; color: #ef6c00; font-weight: bold;">{{ sisaCuti }} <span style="font-size: 14px;">Hari</span></h1>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col size="6">
+        <ion-button expand="block" color="success" style="height: 100px;" (click)="absen('masuk')">
+          <div style="display: flex; flex-direction: column; align-items: center;">
+            <strong style="font-size: 18px;">MASUK</strong>
+          </div>
+        </ion-button>
+      </ion-col>
+      
+      <ion-col size="6">
+        <ion-button expand="block" color="danger" style="height: 100px;" (click)="absen('pulang')">
+          <div style="display: flex; flex-direction: column; align-items: center;">
+            <strong style="font-size: 18px;">PULANG</strong>
+          </div>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-button expand="block" color="tertiary" (click)="keHalamanIzin()" style="margin-top: 5px; margin-bottom: 20px;">
+    <ion-icon name="document-text-outline" slot="start"></ion-icon>
+    Pengajuan Izin / Cuti
+  </ion-button>
+
+  <ion-card style="border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); margin: 0 0 20px 0; background: #f8faff;">
+    <ion-card-content style="text-align: center; padding: 20px;">
+      
+      <div [style.background]="'conic-gradient(#5260ff ' + jamKerja.persentase + '%, #e0e6ff 0)'" 
+           style="width: 140px; height: 140px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px auto;">
+        
+        <div style="width: 115px; height: 115px; border-radius: 50%; background: #f8faff; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+          <span style="font-size: 13px; color: #7f8fa6;">Work Hours</span>
+          <span style="font-size: 24px; font-weight: bold; color: #5260ff; margin-top: 5px;">{{ jamKerja.persentase }}%</span>
+        </div>
+      </div>
+
+      <h3 style="font-weight: bold; color: #2f3640; margin-bottom: 5px;">Working Hours This Month</h3>
+      <p style="color: #7f8fa6; font-size: 14px; margin-top: 0;">{{ jamKerja.aktual }} hrs / {{ jamKerja.target }} hrs</p>
+
+      <div style="text-align: left; margin-top: 20px; font-size: 14px;">
+        <div style="display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px dashed #dcdde1;">
+          <span style="color: #7f8fa6;">Working Hours Target</span>
+          <span style="font-weight: bold; color: #2f3640;">{{ jamKerja.target }} hrs</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px dashed #dcdde1;">
+          <span style="color: #7f8fa6;">Actual Hours</span>
+          <span style="font-weight: bold; color: #5260ff;">{{ jamKerja.aktual }} hrs</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; padding: 10px 0;">
+          <span style="color: #7f8fa6;">Remaining Hours</span>
+          <span style="font-weight: bold; color: #eb445a;">{{ jamKerja.sisa }} hrs</span>
+        </div>
+      </div>
+
+    </ion-card-content>
+  </ion-card>
+  <hr style="margin: 30px 0; border: 0.5px solid #ddd;">
+
+  <ion-list-header style="padding-inline-start: 0;">
+    <ion-label style="font-size: 18px; font-weight: bold; color: #333;">Riwayat Absensi</ion-label>
+  </ion-list-header>
+
+  <ion-list lines="full">
+    <ion-item *ngFor="let item of listAbsen">
+      
+      <ion-avatar slot="start">
+        <img [src]="'http://localhost:8000/storage/' + item.foto_selfie" alt="Selfie" />
+      </ion-avatar>
+
+      <ion-label>
+        <h2 style="font-weight: bold;">Absen {{ item.status | titlecase }}</h2>
+        <p>{{ item.created_at | date:'dd MMM yyyy, HH:mm' }} WIB</p>
+      </ion-label>
+      
+      <ion-note slot="end" [color]="item.status === 'masuk' ? 'success' : 'danger'" style="font-weight: bold;">
+        {{ item.status === 'masuk' ? 'IN' : 'OUT' }}
+      </ion-note>
+    </ion-item>
+
+    <ion-item *ngIf="listAbsen.length === 0">
+      <ion-label class="ion-text-center">
+        <p>Belum ada riwayat absen hari ini.</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <hr style="margin: 30px 0; border: 0.5px solid #ddd;">
+
+  <ion-list-header style="padding-inline-start: 0;">
+    <ion-label style="font-size: 18px; font-weight: bold; color: #333;">Status Izin / Cuti</ion-label>
+  </ion-list-header>
+
+  <ion-list lines="full">
+    <ion-item *ngFor="let izin of listIzin">
+      <ion-icon name="document-text" slot="start" color="medium"></ion-icon>
+      <ion-label>
+        <h2 style="font-weight: bold;">Pengajuan {{ izin.tipe_izin }}</h2>
+        <p>{{ izin.tanggal | date:'dd MMM yyyy' }} - {{ izin.alasan }}</p>
+      </ion-label>
+      
+      <ion-badge slot="end" 
+        [color]="izin.status === 'approved' ? 'success' : (izin.status === 'rejected' ? 'danger' : 'warning')">
+        {{ izin.status | uppercase }}
+      </ion-badge>
+    </ion-item>
+
+    <ion-item *ngIf="listIzin.length === 0">
+      <ion-label class="ion-text-center">
+        <p>Belum ada riwayat pengajuan izin.</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
 </ion-content>

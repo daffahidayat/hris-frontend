@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Login Absensi</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div style="text-align: center; margin-top: 40px; margin-bottom: 30px;">
+    <h2>Selamat Datang!</h2>
+    <p>Silakan masuk menggunakan akun Anda</p>
+  </div>
+
+  <ion-list>
+    <ion-item>
+      <!-- Tambahin ngModel buat nangkep email -->
+      <ion-input 
+        label="Email" 
+        labelPlacement="floating" 
+        type="email" 
+        placeholder="email@contoh.com"
+        [(ngModel)]="emailData">
+      </ion-input>
+    </ion-item>
+
+    <ion-item>
+      <!-- Tambahin ngModel buat nangkep password -->
+      <ion-input 
+        label="Password" 
+        labelPlacement="floating" 
+        type="password" 
+        placeholder="Masukkan password"
+        [(ngModel)]="passwordData">
+      </ion-input>
+    </ion-item>
+  </ion-list>
+
+  <!-- Tambahin event click ke fungsi gasLogin() -->
+  <ion-button expand="block" style="margin-top: 30px;" (click)="gasLogin()">
+    Masuk
+  </ion-button>
+</ion-content>

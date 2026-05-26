@@ -1,0 +1,108 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar style="--background: #fafafc; --min-height: 60px;">
+    
+    <ion-buttons slot="start" style="margin-left: 5px;">
+      <ion-button (click)="kembaliKeHome()">
+        <ion-icon name="menu-outline" style="font-size: 30px; color: #34495e;"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    
+    <ion-buttons slot="end" style="margin-right: 15px;">
+      <ion-avatar style="width: 35px; height: 35px; border: 2px solid #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+        <img src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+      </ion-avatar>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content style="--background: #fafafc;">
+  
+  <div style="padding: 10px 20px 10px 20px;">
+    <h1 style="font-weight: bold; color: #2c3e50; font-size: 26px; line-height: 1.3; margin: 0;">
+      Welcome, Mr. {{ profil.nama }} 👋
+    </h1>
+  </div>
+
+  <ion-card style="border-radius: 20px; box-shadow: 0 8px 20px rgba(0,0,0,0.04); margin: 20px; background: #fff; padding: 25px 20px;">
+    
+    <div style="text-align: center; margin-bottom: 25px;">
+      <div style="width: 140px; height: 180px; margin: 0 auto; background: #e74c3c; border-radius: 15px; overflow: hidden; box-shadow: 0 5px 15px rgba(231, 76, 60, 0.3);">
+        <img src="https://ionicframework.com/docs/img/demos/avatar.svg" style="width: 100%; height: 100%; object-fit: cover; opacity: 0.9;" />
+      </div>
+    </div>
+
+    <div style="display: flex; align-items: center; margin-bottom: 15px;">
+      <ion-icon name="business-outline" style="color: #8c9eff; font-size: 20px; margin-right: 12px;"></ion-icon>
+      <span style="flex: 1; color: #7f8fa6; font-size: 14px;">Department</span>
+      <span style="background: #efecff; color: #7047eb; font-size: 12px; font-weight: bold; padding: 6px 12px; border-radius: 6px;">{{ profil.department }}</span>
+    </div>
+
+    <div style="display: flex; align-items: center; margin-bottom: 15px;">
+      <ion-icon name="person-outline" style="color: #1dd1a1; font-size: 20px; margin-right: 12px;"></ion-icon>
+      <span style="flex: 1; color: #7f8fa6; font-size: 14px;">As Position</span>
+      <span style="color: #2f3640; font-size: 14px; font-weight: 500;">{{ profil.position }}</span>
+    </div>
+
+    <div style="display: flex; align-items: center; margin-bottom: 15px;">
+      <ion-icon name="briefcase-outline" style="color: #ff9f43; font-size: 20px; margin-right: 12px;"></ion-icon>
+      <span style="flex: 1; color: #7f8fa6; font-size: 14px;">Status</span>
+      <span style="background: #e3fcf7; color: #10ac84; font-size: 12px; font-weight: bold; padding: 6px 12px; border-radius: 6px;">{{ profil.status_karyawan }}</span>
+    </div>
+
+    <div style="display: flex; align-items: center; margin-bottom: 15px;">
+      <ion-icon name="location-outline" style="color: #ff6b6b; font-size: 20px; margin-right: 12px;"></ion-icon>
+      <span style="flex: 1; color: #7f8fa6; font-size: 14px;">Homebased</span>
+      <span style="color: #2f3640; font-size: 14px; font-weight: 500;">{{ profil.homebased }}</span>
+    </div>
+
+    <div style="display: flex; align-items: center; margin-bottom: 15px;">
+      <ion-icon name="calendar-outline" style="color: #f368e0; font-size: 20px; margin-right: 12px;"></ion-icon>
+      <span style="flex: 1; color: #7f8fa6; font-size: 14px;">Birth Date</span>
+      <span style="color: #2f3640; font-size: 14px; font-weight: 500;">{{ profil.birth_date }}</span>
+    </div>
+
+    <div style="display: flex; align-items: center; margin-bottom: 15px;">
+      <ion-icon name="calendar-outline" style="color: #54a0ff; font-size: 20px; margin-right: 12px;"></ion-icon>
+      <span style="flex: 1; color: #7f8fa6; font-size: 14px;">Join Date</span>
+      <span style="color: #2f3640; font-size: 14px; font-weight: 500;">{{ profil.join_date }}</span>
+    </div>
+
+    <div style="display: flex; align-items: center;">
+      <ion-icon name="hourglass-outline" style="color: #8395a7; font-size: 20px; margin-right: 12px;"></ion-icon>
+      <span style="flex: 1; color: #7f8fa6; font-size: 14px;">Working Time</span>
+      <span style="color: #2f3640; font-size: 14px; font-weight: 500;">{{ profil.working_time }}</span>
+    </div>
+
+  </ion-card>
+
+  <ion-card style="border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); margin: 0 20px 20px 20px;">
+    <ion-card-header>
+      <ion-card-title style="font-size: 16px; font-weight: bold; color: #2c3e50;">
+        <ion-icon name="lock-closed-outline" style="vertical-align: middle; margin-right: 5px;"></ion-icon> Security Settings
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item lines="none" style="--background: #f8f9fa; border-radius: 10px; margin-bottom: 10px;">
+        <ion-label position="floating" style="color: #7f8fa6;">Password Lama</ion-label>
+        <ion-input type="password" [(ngModel)]="passLama"></ion-input>
+      </ion-item>
+      
+      <ion-item lines="none" style="--background: #f8f9fa; border-radius: 10px;">
+        <ion-label position="floating" style="color: #7f8fa6;">Password Baru</ion-label>
+        <ion-input type="password" [(ngModel)]="passBaru"></ion-input>
+      </ion-item>
+
+      <ion-button expand="block" style="margin-top: 20px; --background: #5260ff; --border-radius: 10px; font-weight: bold;" (click)="prosesGantiPassword()" [disabled]="isLoading">
+        {{ isLoading ? 'Memproses...' : 'SIMPAN PASSWORD' }}
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+
+  <div style="padding: 0 20px 30px 20px;">
+    <ion-button expand="block" fill="outline" color="danger" style="--border-radius: 10px; font-weight: bold; --border-width: 2px;" (click)="logout()">
+      <ion-icon name="log-out-outline" slot="start"></ion-icon>
+      LOG OUT
+    </ion-button>
+  </div>
+
+</ion-content>
