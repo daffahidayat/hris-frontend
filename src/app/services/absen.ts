@@ -123,4 +123,40 @@ export class AbsenService {
       headers: new HttpHeaders({ 'Authorization': `Bearer ${token}` })
     });
   }
+
+  ajukanLembur(data: any) {
+    const token = localStorage.getItem('token_absen');
+    return this.http.post(`${this.apiUrl}/lembur`, data, {
+      headers: new HttpHeaders({ 'Authorization': `Bearer ${token}` })
+    });
+  }
+
+  getRiwayatLembur() {
+    const token = localStorage.getItem('token_absen');
+    return this.http.get(`${this.apiUrl}/lembur/riwayat`, {
+      headers: new HttpHeaders({ 'Authorization': `Bearer ${token}` })
+    });
+  }
+
+  // --- FITUR ADMIN: KELOLA LEMBUR ---
+  getAdminLembur() {
+    const headers = new HttpHeaders({ 'Authorization': 'Bearer ' + localStorage.getItem('token_absen') });
+    return this.http.get(this.apiUrl + '/admin/lembur', { headers });
+  }
+
+  updateStatusLembur(id: number, status: string) {
+    const headers = new HttpHeaders({ 'Authorization': 'Bearer ' + localStorage.getItem('token_absen') });
+    return this.http.put(this.apiUrl + '/admin/lembur/' + id, { status }, { headers });
+  }
+
+  // Fitur Admin HR: Generate Gaji
+  generatePayroll() {
+    const headers = new HttpHeaders({ 'Authorization': 'Bearer ' + localStorage.getItem('token_absen') });
+    return this.http.post(this.apiUrl + '/admin/generate-payroll', {}, { headers });
+  }
+
+  getSlipGaji() {
+    const headers = new HttpHeaders({ 'Authorization': 'Bearer ' + localStorage.getItem('token_absen') });
+    return this.http.get(this.apiUrl + '/slip-gaji', { headers });
+  }
 }

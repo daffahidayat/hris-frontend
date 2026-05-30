@@ -1,0 +1,67 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/dashboard-admin"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Approval Lembur</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding" style="--background: #fafafc;">
+  
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content pullingIcon="chevron-down-circle-outline" refreshingSpinner="circles"></ion-refresher-content>
+  </ion-refresher>
+
+  <div *ngIf="listLembur.length === 0" style="text-align: center; padding: 40px 20px; color: #7f8fa6;">
+    <ion-icon name="time-outline" style="font-size: 48px; color: #dcdde1;"></ion-icon>
+    <p>Belum ada pengajuan lembur dari karyawan.</p>
+  </div>
+
+  <div style="padding-bottom: 20px;">
+    
+    <ion-card *ngFor="let item of listLembur" style="margin: 0 0 15px 0; border-radius: 12px; background: white; border: 1px solid #e2e8f0; box-shadow: none;">
+      <ion-card-content style="padding: 16px;">
+        
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
+          <div style="font-weight: 700; color: #2d3436; font-size: 16px; display: flex; align-items: center;">
+            <ion-icon name="person-outline" style="margin-right: 8px; color: #5260ff; font-size: 18px;"></ion-icon>
+            {{ item.user ? item.user.name : 'Karyawan Hapus' }}
+          </div>
+          
+          <ion-badge [color]="item.status === 'approved' ? 'success' : (item.status === 'rejected' ? 'danger' : 'warning')" 
+                     style="border-radius: 20px; padding: 6px 12px; font-size: 11px; font-weight: bold;">
+            {{ item.status | uppercase }}
+          </ion-badge>
+        </div>
+        
+        <div style="display: flex; flex-direction: column; gap: 4px; margin-bottom: 12px; margin-left: 26px;">
+          <div style="font-size: 13px; color: #636e72; display: flex; align-items: center;">
+            <ion-icon name="calendar-outline" style="margin-right: 6px;"></ion-icon>
+            {{ item.tanggal }}
+          </div>
+          <div style="font-size: 13px; color: #636e72; display: flex; align-items: center;">
+            <ion-icon name="time-outline" style="margin-right: 6px;"></ion-icon>
+            {{ item.jam_mulai }} s/d {{ item.jam_selesai }}
+          </div>
+        </div>
+        
+        <div style="background: #f8f9fa; padding: 12px; border-radius: 8px; border: 1px solid #f1f2f6; margin-bottom: 15px;">
+          <div style="font-size: 11px; color: #a4b0be; margin-bottom: 4px; font-weight: 700;">ALASAN LEMBUR:</div>
+          <div style="font-size: 14px; color: #2d3436; line-height: 1.5; white-space: pre-wrap;">{{ item.keterangan }}</div>
+        </div>
+
+        <div *ngIf="item.status === 'pending'" style="display: flex; gap: 10px;">
+          <ion-button expand="block" color="danger" fill="outline" style="flex: 1; --border-radius: 8px;" (click)="ubahStatus(item.id, 'rejected')">
+            <ion-icon name="close-circle-outline" slot="start"></ion-icon> TOLAK
+          </ion-button>
+          <ion-button expand="block" color="success" style="flex: 1; --border-radius: 8px;" (click)="ubahStatus(item.id, 'approved')">
+            <ion-icon name="checkmark-circle-outline" slot="start"></ion-icon> ACC
+          </ion-button>
+        </div>
+
+      </ion-card-content>
+    </ion-card>
+
+  </div>
+</ion-content>

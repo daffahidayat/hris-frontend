@@ -7,7 +7,7 @@ import {
   IonList, IonItem, IonInput, IonButton 
 } from '@ionic/angular/standalone';
 
-// Panggil kurir yang tadi kita bikin (sesuaikan nama file belakangnya kalau error, bisa /auth atau /auth.service)
+// Panggil kurir yang tadi kita bikin
 import { AuthService } from '../../services/auth'; 
 
 @Component({
@@ -49,15 +49,24 @@ export class LoginPage implements OnInit {
     this.authService.login(dataKirim).subscribe({
       next: (responAPI: any) => {
         console.log('Sukses Bro!', responAPI);
+        
         // Simpen Token (Kunci) dari Laravel ke memori HP
         localStorage.setItem('token_absen', responAPI.access_token);
         
         alert('Login Sukses! Selamat Datang.');
         
-        // --- TAMBAHAN CEK ROLE DI SINI BRO ---
-        if (responAPI.role === 'admin') {
-          console.log('atmin login loh ya!');
+        // --- LOGIKA 3 CABANG DASHBOARD ---
+        // Ambil data role, jaga-jaga kalau datanya ada di dalam responAPI.user.role atau responAPI.role
+        const role = responAPI.user?.role || responAPI.role; 
+        
+        if (role === 'manajemen') {
+          console.log('Bos Manajemen login!');
+          this.router.navigate(['/manajemen-dashboard']);
+          
+        } else if (role === 'admin' || role === 'hrd') {
+          console.log('HRD / Admin login!');
           this.router.navigate(['/admin-dashboard']);
+          
         } else {
           console.log('Karyawan login.');
           this.router.navigate(['/home']);

@@ -1,0 +1,27 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar style="--background: #2c3e50; color: white;">
+    <ion-title style="font-weight: bold;">
+      <ion-icon name="business-outline" style="vertical-align: middle; margin-right: 5px;"></ion-icon>
+      Panel Manajemen
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="logout()" style="color: white; font-weight: bold;">
+        <ion-icon name="log-out-outline" slot="end"></ion-icon> Logout
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding" style="--background: #fafafc;">
+  
+  <div style="text-align: center; margin: 20px 0 30px 0;">
+    <h2 style="font-weight: bold; color: #2c3e50;">Master Data Control</h2>
+    <p style="color: #7f8fa6;">Kelola data pusat dan akun karyawan sistem HRIS.</p>
+  </div>
+
+  <ion-button expand="block" style="--border-radius: 12px; font-weight: bold; height: 60px; --background: #5260ff; box-shadow: 0 4px 15px rgba(82, 96, 255, 0.4);" (click)="bukaTambahKaryawan()">
+    <ion-icon name="person-add-outline" slot="start" style="font-size: 24px;"></ion-icon>
+    TAMBAH KARYAWAN BARU
+  </ion-button>
+
+  </ion-content>

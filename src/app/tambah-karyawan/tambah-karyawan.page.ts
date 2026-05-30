@@ -5,12 +5,13 @@ import { Router } from '@angular/router';
 import { 
   IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonBackButton,
   IonItem, IonLabel, IonInput, IonButton, IonIcon, IonSelect, IonSelectOption,
-  LoadingController
+  IonDatetimeButton, IonModal, IonDatetime 
 } from '@ionic/angular/standalone';
 import { AbsenService } from '../services/absen';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { addIcons } from 'ionicons';
-import { cameraOutline, personAddOutline, saveOutline } from 'ionicons/icons';
+// --- TAMBAHIN calendarOutline DI SINI ---
+import { cameraOutline, personAddOutline, saveOutline, calendarOutline } from 'ionicons/icons';
 
 @Component({
   selector: 'app-tambah-karyawan',
@@ -20,42 +21,41 @@ import { cameraOutline, personAddOutline, saveOutline } from 'ionicons/icons';
   imports: [
     IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonBackButton,
     IonItem, IonLabel, IonInput, IonButton, IonIcon, IonSelect, IonSelectOption,
+    IonDatetimeButton, IonModal, IonDatetime, 
     CommonModule, FormsModule
   ]
 })
 export class TambahKaryawanPage {
 
-  // Model data form karyawan baru
   karyawan: any = {
     name: '',
     email: '',
     password: '',
     department: '',
     position: '',
-    status_karyawan: '', // Default status
+    status_karyawan: 'Outsourcing',
     homebased: '',
     birth_date: '',
     join_date: '',
-    foto_profil: '' // Menyimpan string base64 foto
+    foto_profil: '' 
   };
 
   previewFoto: string = '';
 
   constructor(
     private absenService: AbsenService,
-    private router: Router,
-    private loadingCtrl: LoadingController
+    private router: Router
   ) {
-    addIcons({ cameraOutline, personAddOutline, saveOutline });
+    // --- DAFTARIN calendarOutline DI SINI ---
+    addIcons({ cameraOutline, personAddOutline, saveOutline, calendarOutline });
   }
 
-  // Fungsi jepret pas foto karyawan
   async ambilFoto() {
     try {
       const foto = await Camera.getPhoto({
         quality: 70,
         resultType: CameraResultType.Base64,
-        source: CameraSource.Prompt // Bisa milih mau kamera langsung atau galeri laptop/HP
+        source: CameraSource.Prompt 
       });
 
       if (foto.base64String) {
@@ -67,29 +67,18 @@ export class TambahKaryawanPage {
     }
   }
 
-  // Fungsi submit data ke Laravel
   async simpanKaryawan() {
-    // Validasi sederhana di frontend
     if (!this.karyawan.name || !this.karyawan.email || !this.karyawan.password || !this.karyawan.department) {
       alert('Tolong lengkapi nama, email, password, dan departemen karyawan baru bro!');
       return;
     }
 
-    const loading = await this.loadingCtrl.create({
-      message: 'Sedang mendaftarkan karyawan...',
-      spinner: 'crescent'
-    });
-    await loading.present();
-
     this.absenService.tambahKaryawan(this.karyawan).subscribe({
       next: (res: any) => {
-        loading.dismiss();
         alert(res.message);
-        // Reset form jika sukses
-        this.router.navigate(['/home']);
+        this.router.navigate(['/manajemen-dashboard']);
       },
       error: (err) => {
-        loading.dismiss();
         alert(err.error?.message || 'Gagal menyimpan data karyawan baru. Cek apakah email sudah terdaftar.');
       }
     });

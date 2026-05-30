@@ -8,7 +8,7 @@ import {
   IonAvatar,
   IonCard, IonCardContent, IonIcon,
   IonBadge,
-  IonRefresher, IonRefresherContent // <-- INI YANG TADI ILANG BRO
+  IonRefresher, IonRefresherContent 
 } from '@ionic/angular/standalone';
 import { AbsenService } from '../services/absen'; 
 import { CommonModule } from '@angular/common';
@@ -17,7 +17,8 @@ import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { Geolocation } from '@capacitor/geolocation';
 
 import { addIcons } from 'ionicons';
-import { ribbonOutline, documentTextOutline, documentText, personCircleOutline, chevronDownCircleOutline } from 'ionicons/icons';
+// --- walletOutline UDAH DITAMBAHIN DI SINI BRO ---
+import { ribbonOutline, documentTextOutline, documentText, personCircleOutline, chevronDownCircleOutline, timeOutline, walletOutline } from 'ionicons/icons';
 
 @Component({
   selector: 'app-home',
@@ -30,7 +31,7 @@ import { ribbonOutline, documentTextOutline, documentText, personCircleOutline, 
     IonList, IonItem, IonLabel, IonNote, IonListHeader,
     IonAvatar,
     IonCard, IonCardContent, IonIcon, IonBadge, 
-    IonRefresher, IonRefresherContent, // <-- DIDAFTARIN LAGI DI SINI
+    IonRefresher, IonRefresherContent,
     CommonModule
   ],
 })
@@ -49,8 +50,8 @@ export class HomePage {
     persentase: 0
   };
 
-  targetLat = -6.401875; 
-  targetLng = 107.442013;
+  targetLat = -6.327822; 
+  targetLng = 107.311627;
   maxJarakMeter = 100;
   
   constructor(
@@ -58,12 +59,12 @@ export class HomePage {
     private absenService: AbsenService,
     private loadingCtrl: LoadingController 
   ) {
-    addIcons({ ribbonOutline, documentTextOutline, documentText, personCircleOutline, chevronDownCircleOutline });
+    // --- walletOutline UDAH DIDAFTARIN DI SINI ---
+    addIcons({ ribbonOutline, documentTextOutline, documentText, personCircleOutline, chevronDownCircleOutline, timeOutline, walletOutline });
 
     this.muatSemuaData();
   }
 
-  // Bikin fungsi khusus biar gampang dipanggil pas refresh
   muatSemuaData() {
     this.muatRiwayat();
     this.muatKlaster(); 
@@ -71,7 +72,6 @@ export class HomePage {
     this.muatStatKaryawan(); 
   }
 
-  // --- FUNGSI PULL-TO-REFRESH YANG TADI ILANG ---
   handleRefresh(event: any) {
     this.muatSemuaData();
     setTimeout(() => {
@@ -198,5 +198,14 @@ export class HomePage {
 
   keHalamanProfil() {
     this.router.navigate(['/profil']);
+  }
+
+  keLembur() {
+    this.router.navigate(['/lembur']);
+  }
+
+  // --- INI FUNGSI BUAT PINDAH KE HALAMAN SLIP GAJI BRO ---
+  keSlipGaji() {
+    this.router.navigate(['/slip-gaji']);
   }
 }

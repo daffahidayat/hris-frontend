@@ -26,7 +26,7 @@
     <p>Jangan lupa absen hari ini ya.</p>
   </div>
 
-  <ion-card color="light" style="margin-bottom: 30px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+  <ion-card color="light" style="margin-bottom: 30px; border-radius: 12px; box-shadow: none; border: 1px solid #e2e8f0;">
     <ion-card-content>
       <div style="display: flex; justify-content: space-between; align-items: center;">
         <div>
@@ -46,7 +46,7 @@
   <ion-grid style="margin-bottom: 20px; padding: 0;">
     <ion-row>
       <ion-col size="6">
-        <ion-card style="margin: 0; background: #e0f7fa; border: 1px solid #b2ebf2;">
+        <ion-card style="margin: 0; background: #e0f7fa; border: 1px solid #b2ebf2; box-shadow: none; border-radius: 12px;">
           <ion-card-content style="text-align: center; padding: 15px 10px;">
             <p style="margin: 0; font-size: 12px; color: #006064; font-weight: bold;">Hadir Bulan Ini</p>
             <h1 style="margin: 5px 0 0; color: #00838f; font-weight: bold;">{{ totalHadir }} <span style="font-size: 14px;">Hari</span></h1>
@@ -54,7 +54,7 @@
         </ion-card>
       </ion-col>
       <ion-col size="6">
-        <ion-card style="margin: 0; background: #fff3e0; border: 1px solid #ffe0b2;">
+        <ion-card style="margin: 0; background: #fff3e0; border: 1px solid #ffe0b2; box-shadow: none; border-radius: 12px;">
           <ion-card-content style="text-align: center; padding: 15px 10px;">
             <p style="margin: 0; font-size: 12px; color: #e65100; font-weight: bold;">Sisa Cuti Lu</p>
             <h1 style="margin: 5px 0 0; color: #ef6c00; font-weight: bold;">{{ sisaCuti }} <span style="font-size: 14px;">Hari</span></h1>
@@ -67,7 +67,7 @@
   <ion-grid>
     <ion-row>
       <ion-col size="6">
-        <ion-button expand="block" color="success" style="height: 100px;" (click)="absen('masuk')">
+        <ion-button expand="block" color="success" style="height: 100px; --border-radius: 12px; --box-shadow: none;" (click)="absen('masuk')">
           <div style="display: flex; flex-direction: column; align-items: center;">
             <strong style="font-size: 18px;">MASUK</strong>
           </div>
@@ -75,7 +75,7 @@
       </ion-col>
       
       <ion-col size="6">
-        <ion-button expand="block" color="danger" style="height: 100px;" (click)="absen('pulang')">
+        <ion-button expand="block" color="danger" style="height: 100px; --border-radius: 12px; --box-shadow: none;" (click)="absen('pulang')">
           <div style="display: flex; flex-direction: column; align-items: center;">
             <strong style="font-size: 18px;">PULANG</strong>
           </div>
@@ -84,12 +84,22 @@
     </ion-row>
   </ion-grid>
 
-  <ion-button expand="block" color="tertiary" (click)="keHalamanIzin()" style="margin-top: 5px; margin-bottom: 20px;">
+  <ion-button expand="block" color="tertiary" (click)="keHalamanIzin()" style="margin-top: 5px; margin-bottom: 20px; --border-radius: 12px; --box-shadow: none;">
     <ion-icon name="document-text-outline" slot="start"></ion-icon>
     Pengajuan Izin / Cuti
   </ion-button>
 
-  <ion-card style="border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); margin: 0 0 20px 0; background: #f8faff;">
+  <ion-button expand="block" style="--border-radius: 12px; font-weight: bold; height: 60px; --background: #ff9f43; --box-shadow: none; margin-bottom: 15px;" (click)="keLembur()">
+    <ion-icon name="time-outline" slot="start" style="font-size: 24px;"></ion-icon>
+    PENGAJUAN LEMBUR
+  </ion-button>
+
+  <ion-button expand="block" style="--border-radius: 12px; font-weight: bold; height: 60px; --background: #2dd36f; --color: white; --box-shadow: none; margin-bottom: 25px;" (click)="keSlipGaji()">
+    <ion-icon name="wallet-outline" slot="start" style="font-size: 24px;"></ion-icon>
+    CEK SLIP GAJI SAYA
+  </ion-button>
+
+  <ion-card style="border-radius: 15px; margin: 0 0 20px 0; background: #f8faff; box-shadow: none; border: 1px solid #e2e8f0;">
     <ion-card-content style="text-align: center; padding: 20px;">
       
       <div [style.background]="'conic-gradient(#5260ff ' + jamKerja.persentase + '%, #e0e6ff 0)'" 

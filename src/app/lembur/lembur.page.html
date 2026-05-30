@@ -1,0 +1,129 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Pengajuan Lembur</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding" style="--background: #fafafc;">
+
+  <div style="display: flex; background: #e0e5ec; border-radius: 10px; margin-bottom: 20px; padding: 4px;">
+    <div (click)="ubahSegmen('form')" 
+         [style.background]="segmenAktif === 'form' ? '#fff' : 'transparent'"
+         [style.color]="segmenAktif === 'form' ? '#5260ff' : '#7f8fa6'"
+         style="flex: 1; text-align: center; padding: 10px; border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.3s;">
+      FORM PENGAJUAN
+    </div>
+    <div (click)="ubahSegmen('riwayat')" 
+         [style.background]="segmenAktif === 'riwayat' ? '#fff' : 'transparent'"
+         [style.color]="segmenAktif === 'riwayat' ? '#5260ff' : '#7f8fa6'"
+         style="flex: 1; text-align: center; padding: 10px; border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.3s;">
+      RIWAYAT
+    </div>
+  </div>
+
+  <div *ngIf="segmenAktif === 'form'">
+    <div style="background: white; border-radius: 15px; border: 1px solid #f1f2f6; padding: 15px;">
+      
+      <ion-item lines="none" style="--background: #f8f9fa; border-radius: 10px; margin-bottom: 12px; display: flex; flex-direction: column; align-items: flex-start; padding: 10px 15px;">
+        <ion-label style="color: #7f8fa6; font-size: 14px; margin-bottom: 10px;">Tanggal Lembur</ion-label>
+        
+        <ion-button id="btn-tgl-lembur" fill="outline" style="width: 100%; --border-color: #a4b0be; --color: #2c3e50; --border-radius: 8px;">
+          <ion-icon name="calendar-outline" slot="start"></ion-icon>
+          {{ formatTgl(formLembur.tanggal) }}
+        </ion-button>
+  
+        <ion-modal trigger="btn-tgl-lembur">
+          <ng-template>
+            <ion-datetime presentation="date" [(ngModel)]="formLembur.tanggal" size="cover" [showDefaultButtons]="true"></ion-datetime>
+          </ng-template>
+        </ion-modal>
+      </ion-item>
+
+      <ion-item lines="none" style="--background: #f8f9fa; border-radius: 10px; margin-bottom: 12px; display: flex; flex-direction: column; align-items: flex-start; padding: 10px 15px;">
+        <ion-label style="color: #7f8fa6; font-size: 14px; margin-bottom: 10px;">Jam Mulai (HH:mm)</ion-label>
+        
+        <ion-button id="btn-jam-mulai" fill="outline" style="width: 100%; --border-color: #a4b0be; --color: #2c3e50; --border-radius: 8px;">
+          <ion-icon name="time-outline" slot="start"></ion-icon>
+          {{ formatJam(formLembur.jam_mulai) }}
+        </ion-button>
+  
+        <ion-modal trigger="btn-jam-mulai">
+          <ng-template>
+            <ion-datetime presentation="time" [(ngModel)]="formLembur.jam_mulai" size="cover" [showDefaultButtons]="true"></ion-datetime>
+          </ng-template>
+        </ion-modal>
+      </ion-item>
+
+      <ion-item lines="none" style="--background: #f8f9fa; border-radius: 10px; margin-bottom: 12px; display: flex; flex-direction: column; align-items: flex-start; padding: 10px 15px;">
+        <ion-label style="color: #7f8fa6; font-size: 14px; margin-bottom: 10px;">Jam Selesai (HH:mm)</ion-label>
+        
+        <ion-button id="btn-jam-selesai" fill="outline" style="width: 100%; --border-color: #a4b0be; --color: #2c3e50; --border-radius: 8px;">
+          <ion-icon name="time-outline" slot="start"></ion-icon>
+          {{ formatJam(formLembur.jam_selesai) }}
+        </ion-button>
+  
+        <ion-modal trigger="btn-jam-selesai">
+          <ng-template>
+            <ion-datetime presentation="time" [(ngModel)]="formLembur.jam_selesai" size="cover" [showDefaultButtons]="true"></ion-datetime>
+          </ng-template>
+        </ion-modal>
+      </ion-item>
+
+      <ion-item lines="none" style="--background: #f8f9fa; border-radius: 10px; margin-bottom: 20px;">
+        <ion-label position="stacked" style="color: #7f8fa6;">Tugas / Keterangan Lembur</ion-label>
+        <ion-textarea placeholder="Jelaskan pekerjaan yang diselesaikan..." [(ngModel)]="formLembur.keterangan" rows="3" style="--color: #2c3e50;"></ion-textarea>
+      </ion-item>
+
+      <ion-button expand="block" (click)="submitLembur()" style="--border-radius: 10px; font-weight: bold; --background: #5260ff;">
+        <ion-icon name="send-outline" slot="start"></ion-icon> AJUKAN LEMBUR
+      </ion-button>
+    </div>
+  </div>
+
+  <div *ngIf="segmenAktif === 'riwayat'">
+    
+    <div *ngIf="riwayat.length === 0" style="text-align: center; padding: 40px 20px; color: #7f8fa6;">
+      <ion-icon name="time-outline" style="font-size: 48px; color: #dcdde1;"></ion-icon>
+      <p>Belum ada riwayat lembur.</p>
+    </div>
+
+    <div style="padding-bottom: 20px;">
+      
+      <ion-card *ngFor="let item of riwayat" style="margin: 0 0 15px 0; border-radius: 12px; background: white; border: 1px solid #e2e8f0; box-shadow: none;">
+        <ion-card-content style="padding: 16px;">
+          
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
+            <div>
+              <div style="font-weight: 700; color: #2d3436; font-size: 15px; display: flex; align-items: center; margin-bottom: 6px;">
+                <ion-icon name="calendar-outline" style="margin-right: 6px; color: #5260ff; font-size: 16px;"></ion-icon>
+                {{ item.tanggal }}
+              </div>
+              <div style="display: flex; align-items: center; font-size: 13px; color: #636e72;">
+                <ion-icon name="time-outline" style="margin-right: 6px; font-size: 16px; color: #0984e3;"></ion-icon>
+                {{ item.jam_mulai }} - {{ item.jam_selesai }}
+              </div>
+            </div>
+            
+            <ion-badge [color]="item.status === 'approved' ? 'success' : (item.status === 'rejected' ? 'danger' : 'warning')" 
+                       style="border-radius: 20px; padding: 6px 12px; font-size: 11px; font-weight: bold; letter-spacing: 0.5px;">
+              {{ item.status | uppercase }}
+            </ion-badge>
+          </div>
+          
+          <div style="height: 1px; background: #f1f2f6; margin: 12px 0;"></div>
+          
+          <div>
+            <div style="font-size: 11px; color: #a4b0be; margin-bottom: 6px; font-weight: 700; letter-spacing: 0.5px;">KETERANGAN TUGAS:</div>
+            <div style="font-size: 14px; color: #2d3436; line-height: 1.6; white-space: pre-wrap; background: #f8f9fa; padding: 12px; border-radius: 8px; border: 1px solid #f1f2f6;">{{ item.keterangan }}</div>
+          </div>
+
+        </ion-card-content>
+      </ion-card>
+      
+    </div>
+  </div>
+
+</ion-content>

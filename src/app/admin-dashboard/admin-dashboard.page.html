@@ -1,21 +1,16 @@
 <ion-header class="ion-no-border">
   <ion-toolbar color="primary">
-    <ion-title style="font-weight: bold;">Panel Admin HRIS</ion-title>
+    <ion-title style="font-weight: bold;">Panel HR</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="logout()" style="font-weight: bold;">
         <ion-icon name="log-out-outline" slot="end" style="margin-left: 5px;"></ion-icon>
-        Keluar
+        Logout
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding" style="--background: #fafafc;">
-  
-  <ion-button expand="block" style="--border-radius: 10px; font-weight: bold; margin-bottom: 25px; --background: #5260ff;" routerLink="/tambah-karyawan">
-    <ion-icon name="person-add-outline" slot="start"></ion-icon>
-    TAMBAH KARYAWAN BARU
-  </ion-button>
 
   <h3 style="font-weight: bold; color: #2c3e50; font-size: 18px; margin-top: 0;">
     <ion-icon name="pie-chart-outline" style="vertical-align: middle; color: #5260ff;"></ion-icon> Overview Kinerja
@@ -47,73 +42,66 @@
     </ion-row>
   </ion-grid>
 
-  <div style="overflow-x: auto; margin-bottom: 30px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.03); background: #fff; border: 1px solid #eee;">
-    <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 14px;">
-      <thead style="background: #f4f6f8; color: #2c3e50;"> 
-        <tr>
-          <th style="padding: 12px 15px; border-bottom: 2px solid #e0e0e0; font-weight: 600;">Nama</th>
-          <th style="padding: 12px 15px; border-bottom: 2px solid #e0e0e0; font-weight: 600;">Menit Telat</th>
-          <th style="padding: 12px 15px; border-bottom: 2px solid #e0e0e0; font-weight: 600;">Status</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let k of dataKaryawan" style="border-bottom: 1px solid #f1f2f6;">
-          <td style="padding: 12px 15px; color: #2f3640;">{{ k.nama }}</td>
-          <td style="padding: 12px 15px; color: #e74c3c; font-weight: 500;">{{ k.menit_terlambat }} m</td>
-          <td style="padding: 12px 15px;">
-            <ion-badge [color]="k.status === 'Sangat Disiplin' ? 'success' : (k.status === 'Normal' ? 'warning' : 'danger')" style="padding: 5px 8px; border-radius: 6px;">
-              {{ k.status }}
-            </ion-badge>
-          </td>
-        </tr>
-        <tr *ngIf="!dataKaryawan || dataKaryawan.length === 0">
-          <td colspan="3" style="padding: 20px; text-align: center; color: #7f8fa6;">Data karyawan kosong.</td>
-        </tr>
-      </tbody>
-    </table>
+  <div style="border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.03); background: #fff; border: 1px solid #eee; margin-bottom: 30px; overflow: hidden;">
+    <div style="overflow-x: auto;">
+      <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 14px;">
+        <thead style="background: #f4f6f8; color: #2c3e50;"> 
+          <tr>
+            <th style="padding: 12px 15px; border-bottom: 2px solid #e0e0e0; font-weight: 600; white-space: nowrap;">Nama</th>
+            <th style="padding: 12px 15px; border-bottom: 2px solid #e0e0e0; font-weight: 600; white-space: nowrap;">Menit Telat</th>
+            <th style="padding: 12px 15px; border-bottom: 2px solid #e0e0e0; font-weight: 600; white-space: nowrap;">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let k of dataKaryawan" style="border-bottom: 1px solid #f1f2f6;">
+            <td style="padding: 12px 15px; color: #2f3640; white-space: nowrap;">{{ k.nama }}</td>
+            <td style="padding: 12px 15px; color: #e74c3c; font-weight: 500; white-space: nowrap;">{{ k.menit_terlambat }} m</td>
+            <td style="padding: 12px 15px; white-space: nowrap;">
+              <ion-badge [color]="k.status === 'Sangat Disiplin' ? 'success' : (k.status === 'Normal' ? 'warning' : 'danger')" style="padding: 5px 8px; border-radius: 6px;">
+                {{ k.status }}
+              </ion-badge>
+            </td>
+          </tr>
+          <tr *ngIf="!dataKaryawan || dataKaryawan.length === 0">
+            <td colspan="3" style="padding: 20px; text-align: center; color: #7f8fa6;">Data karyawan kosong.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 
-  <h3 style="font-weight: bold; color: #2c3e50; font-size: 18px;">
-    <ion-icon name="document-text-outline" style="vertical-align: middle; color: #ff9f43;"></ion-icon> Persetujuan Izin / Cuti
-  </h3>
-  
-  <div style="overflow-x: auto; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.03); background: #fff; border: 1px solid #eee; margin-bottom: 20px;">
-    <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 14px;">
-      <thead style="background: #f4f6f8; color: #2c3e50;"> 
-        <tr>
-          <th style="padding: 12px 15px; border-bottom: 2px solid #e0e0e0; font-weight: 600;">Tanggal</th>
-          <th style="padding: 12px 15px; border-bottom: 2px solid #e0e0e0; font-weight: 600;">Nama</th>
-          <th style="padding: 12px 15px; border-bottom: 2px solid #e0e0e0; font-weight: 600;">Tipe</th>
-          <th style="padding: 12px 15px; border-bottom: 2px solid #e0e0e0; font-weight: 600;">Alasan</th>
-          <th style="padding: 12px 15px; border-bottom: 2px solid #e0e0e0; font-weight: 600;">Status</th>
-          <th style="padding: 12px 15px; border-bottom: 2px solid #e0e0e0; font-weight: 600; text-align: center;">Aksi</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngIf="daftarIzin.length === 0">
-          <td colspan="6" style="padding: 20px; text-align: center; color: #7f8fa6;">Belum ada pengajuan izin/cuti baru.</td>
-        </tr>
-        
-        <tr *ngFor="let izin of daftarIzin" style="border-bottom: 1px solid #f1f2f6;">
-          <td style="padding: 12px 15px; white-space: nowrap; color: #7f8fa6;">{{ izin.tanggal }}</td>
-          <td style="padding: 12px 15px; font-weight: 500; color: #2f3640;">{{ izin.user?.name }}</td>
-          <td style="padding: 12px 15px;"><strong style="color: #3498db;">{{ izin.tipe_izin }}</strong></td>
-          <td style="padding: 12px 15px; color: #2f3640;">{{ izin.alasan }}</td>
-          <td style="padding: 12px 15px;">
-            <ion-badge [color]="izin.status === 'approved' ? 'success' : (izin.status === 'rejected' ? 'danger' : 'warning')" style="padding: 5px 8px; border-radius: 6px;">
-              {{ izin.status | uppercase }}
-            </ion-badge>
-          </td>
-          <td style="padding: 12px 15px; text-align: center; white-space: nowrap;">
-            <ng-container *ngIf="izin.status === 'pending'">
-              <ion-button size="small" color="success" (click)="prosesIzin(izin.id, 'approved')" style="--border-radius: 6px;">ACC</ion-button>
-              <ion-button size="small" color="danger" (click)="prosesIzin(izin.id, 'rejected')" style="--border-radius: 6px;">Tolak</ion-button>
-            </ng-container>
-            <span *ngIf="izin.status !== 'pending'" style="color: #bdc3c7; font-weight: bold; font-size: 12px;">SELESAI</span>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+  <ion-grid style="padding: 0; margin-bottom: 15px;">
+    <ion-row>
+      <ion-col size="12">
+        <ion-button expand="block" (click)="keAdminLembur()" style="--border-radius: 12px; font-weight: bold; height: 55px; --background: #ff9f43; --box-shadow: none;">
+          <ion-icon name="time-outline" slot="start" style="font-size: 24px;"></ion-icon>
+          KELOLA PENGAJUAN LEMBUR
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-grid style="padding: 0; margin-bottom: 15px;">
+    <ion-row>
+      <ion-col size="12">
+        <ion-button expand="block" (click)="keAdminIzin()" style="--border-radius: 12px; font-weight: bold; height: 55px; --background: #3498db; --box-shadow: none;">
+          <ion-icon name="document-text-outline" slot="start" style="font-size: 24px;"></ion-icon>
+          KELOLA PENGAJUAN IZIN / CUTI
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <!-- INI DIA TOMBOL UNGU BUAT GENERATE PAYROLL -->
+  <ion-grid style="padding: 0; margin-bottom: 30px;">
+    <ion-row>
+      <ion-col size="12">
+        <ion-button expand="block" (click)="generateGaji()" style="--border-radius: 12px; font-weight: bold; height: 55px; --background: #9b59b6; --box-shadow: none;">
+          <ion-icon name="cash-outline" slot="start" style="font-size: 24px;"></ion-icon>
+          GENERATE PAYROLL BULAN INI
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
 </ion-content>

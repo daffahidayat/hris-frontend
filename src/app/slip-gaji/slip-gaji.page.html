@@ -1,0 +1,64 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Slip Gaji</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding" style="--background: #fafafc;">
+  
+  <div *ngIf="listSlip.length === 0" style="text-align: center; padding: 40px 20px; color: #7f8fa6;">
+    <ion-icon name="wallet-outline" style="font-size: 48px; color: #dcdde1;"></ion-icon>
+    <p>Belum ada riwayat slip gaji.</p>
+  </div>
+
+  <div style="padding-bottom: 20px;">
+    <ion-card *ngFor="let item of listSlip" style="margin: 0 0 20px 0; border-radius: 12px; background: white; border: 1px solid #e2e8f0; box-shadow: 0 4px 6px rgba(0,0,0,0.02);">
+      
+      <div style="background: #f4f6f8; padding: 15px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dashed #dcdde1;">
+        <div>
+          <div style="font-size: 12px; color: #7f8fa6; font-weight: bold; margin-bottom: 4px;">PERIODE</div>
+          <div style="font-weight: bold; color: #2d3436; font-size: 16px; display: flex; align-items: center;">
+            <ion-icon name="calendar-outline" style="margin-right: 6px; color: #0984e3;"></ion-icon>
+            {{ item.periode }}
+          </div>
+        </div>
+        <ion-badge color="success" style="padding: 6px 12px; border-radius: 20px; font-weight: bold;">{{ item.status }}</ion-badge>
+      </div>
+
+      <ion-card-content style="padding: 15px;">
+        <div style="display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 14px;">
+          <span style="color: #636e72;">Gaji Pokok</span>
+          <span style="font-weight: 500; color: #2d3436;">{{ formatRupiah(item.gaji_pokok) }}</span>
+        </div>
+        
+        <div style="display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 14px;">
+          <span style="color: #636e72; display: flex; align-items: center;">
+            <ion-icon name="add-circle-outline" color="success" style="margin-right: 5px;"></ion-icon> Tunjangan / Lembur
+          </span>
+          <span style="font-weight: 500; color: #2ed573;">+ {{ formatRupiah(item.tunjangan_lembur) }}</span>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; margin-bottom: 15px; font-size: 14px;">
+          <span style="color: #636e72; display: flex; align-items: center;">
+            <ion-icon name="remove-circle-outline" color="danger" style="margin-right: 5px;"></ion-icon> Potongan
+          </span>
+          <span style="font-weight: 500; color: #ff4757;">- {{ formatRupiah(item.potongan) }}</span>
+        </div>
+
+        <div style="height: 1px; background: #e2e8f0; margin-bottom: 15px;"></div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+          <span style="font-weight: bold; color: #2d3436; font-size: 15px;">TOTAL DITERIMA</span>
+          <span style="font-weight: 900; color: #0984e3; font-size: 18px;">{{ formatRupiah(item.total_terima) }}</span>
+        </div>
+
+        <ion-button expand="block" (click)="downloadSlip(item.periode)" style="--border-radius: 8px; font-weight: bold; --background: #f1f2f6; --color: #5260ff; box-shadow: none;">
+          <ion-icon name="download-outline" slot="start"></ion-icon> DOWNLOAD SLIP
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>
